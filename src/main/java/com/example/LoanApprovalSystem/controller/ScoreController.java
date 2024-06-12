@@ -1,7 +1,7 @@
 package com.example.LoanApprovalSystem.controller;
 
-import com.example.LoanApprovalSystem.model.CalculateScoreRequest;
-import com.example.LoanApprovalSystem.model.ScoreResponse;
+import com.example.LoanApprovalSystem.controller.dto.CalculateScoreRequest;
+import com.example.LoanApprovalSystem.controller.dto.ScoreResponse;
 import com.example.LoanApprovalSystem.service.ScoreService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class ScoreController {
     if (scores != null && !scores.isEmpty()) {
       return ResponseEntity.ok(scores);
     } else {
-      return ResponseEntity.noContent().build();
+      return ResponseEntity.notFound().build();
     }
   }
 }

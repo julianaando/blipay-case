@@ -1,4 +1,4 @@
-package com.example.LoanApprovalSystem.model;
+package com.example.LoanApprovalSystem.controller.dto;
 
 import java.util.Date;
 
