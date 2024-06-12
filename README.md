@@ -11,11 +11,10 @@ Foi desenvolvida uma API que realiza a análise de crédito de clientes para det
 
 ## :woman_technologist: Tecnologias Utilizadas
 
-- **Linguagem de Programação:** Java
+- **Linguagem de Programação:** Java 17
 - **Framework:** Spring
 - **Banco de Dados:** H2
 - **Testes:** JUnit
-- **Arquitetura:** MVC e Hexagonal
 
 ## ⚙️ Como Executar
 
@@ -47,7 +46,7 @@ mvn test
 
 | Método | Funcionalidade | URL |
 |---|---|---|
-| `POST` | Cadastra um novo cliente e analisa seu score, para validar a liberação do empréstimo  | `http://localhost:8080/leads`
+| `POST` | Cadastra um novo cliente e analisa seu score, para validar a liberação do empréstimo  | `http://localhost:8080/score/calculate`
 
 <details>
   <summary> A estrutura do corpo da requisição deve seguir o padrão abaixo: </summary>
@@ -78,12 +77,12 @@ mvn test
 </details>
 
 <details>
-<summary> Consultas (GET) </summary>
+<summary> Consultas por CPF (GET) </summary>
   <br>
   
 | Método | Funcionalidade | URL |
 |---|---|---|
-| `GET` | Consulta todas as análises de crédito realizadas por CPF | `http://localhost:8080/leads`
+| `GET` | Consulta todas as análises de crédito realizadas por CPF | `http://localhost:8080/score/cpf/{cpf}`
 
 <details>
  <summary>  Um exemplo de resposta bem-sucedida com <code>status 200</code> é: </summary>
