@@ -2,11 +2,9 @@ package com.example.LoanApprovalSystem.utils;
 
 public class Validator {
 
-  public static Integer ageValidator(Integer age) {
+  public static void ageValidator(Integer age) {
     if (age < 18) {
       throw new IllegalArgumentException("Sua idade deve ser maior ou igual a 18 anos.");
-    } else {
-      return age;
     }
   }
 

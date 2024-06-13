@@ -1,9 +1,10 @@
-package com.example.LoanApprovalSystem.service;
+package com.example.LoanApprovalSystem;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -13,6 +14,7 @@ import com.example.LoanApprovalSystem.model.Score;
 import com.example.LoanApprovalSystem.controller.dto.CalculateScoreRequest;
 import com.example.LoanApprovalSystem.controller.dto.ScoreResponse;
 import com.example.LoanApprovalSystem.repository.ScoreRepository;
+import com.example.LoanApprovalSystem.service.ScoreService;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
@@ -27,7 +29,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Tests for ScoreService")
-class ScoreServiceTest {
+public class ScoreServiceTest {
 
   @Mock
   private ScoreRepository scoreRepository;
@@ -111,9 +113,31 @@ class ScoreServiceTest {
     RuntimeException exception = assertThrows(RuntimeException.class, () -> {
       scoreService.getScoresByCpf(cpf);
     });
-
     assertEquals("Nenhuma análise de crédito encontrada para o CPF " + cpf, exception.getMessage());
 
     verify(scoreRepository, times(1)).findByCpf(cpf);
   }
+
+  @Test
+  @DisplayName("Convert Kelvin to Celsius")
+  public void kelvinToCelsius_validInput_shouldReturnCorrectCelsius() {
+    Double kelvin = 300.0;
+    Double celsius = scoreService.kelvinToCelsius(kelvin);
+    assertEquals(26.85, celsius, 0.01);
+  }
+
+  @Test
+  @DisplayName("City not found when getting temperature")
+  public void getTemperature_cityNotFound_shouldThrowException() {
+    mockRequest.setCity("String");
+
+    ScoreService scoreServiceSpy = spy(scoreService);
+    doThrow(new RuntimeException("A cidade String não foi encontrada.")).when(scoreServiceSpy).getTemperature("String");
+    RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+      scoreServiceSpy.calculateScore(mockRequest);
+    });
+
+    assertEquals("A cidade String não foi encontrada.", exception.getMessage());
+  }
+
 }
